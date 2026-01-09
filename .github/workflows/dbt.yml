@@ -1,0 +1,40 @@
+name: dbt build
+
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+
+jobs:
+  dbt-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync --frozen --no-dev
+
+      - name: Write service account key
+        env:
+          GCP_DBT_RUNNER_KEY: ${{ secrets.GCP_DBT_RUNNER_KEY }}
+        run: |
+          printf '%s' "$GCP_DBT_RUNNER_KEY" > dbt-runner-key.json
+
+      - name: dbt deps
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}
+        run: dbt deps
+
+      - name: dbt build
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}
+        run: dbt build --profile prod
