@@ -21,9 +21,7 @@ jobs:
         uses: astral-sh/setup-uv@v4
 
       - name: Install dependencies
-        run: |
-          uv sync --frozen --no-dev
-          source .venv/bin/activate
+        run: uv sync --frozen --no-dev
 
       - name: Write service account key
         env:
@@ -34,9 +32,9 @@ jobs:
       - name: dbt deps
         env:
           DBT_PROFILES_DIR: ${{ github.workspace }}
-        run: dbt deps
+        run: uv run dbt deps
 
       - name: dbt build
         env:
           DBT_PROFILES_DIR: ${{ github.workspace }}
-        run: dbt build --profile prod
+        run: uv run dbt build --profile prod
