@@ -32,14 +32,7 @@ Introductory code to run DBT on Google Cloud
 
 ### Terraform provisioning
 
-```bash
-gcloud auth application-default login
-gcloud config set project jaffleshop-483809
-
-cd infra/terraform
-terraform init
-terraform apply -var project_id=jaffleshop-483809
-```
+Done by github action in .github/workflows/terraform-apply
 
 Terraform provisions:
 - BigQuery API enablement
