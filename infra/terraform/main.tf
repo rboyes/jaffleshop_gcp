@@ -8,10 +8,17 @@ resource "google_project_service" "bigquery" {
   service = "bigquery.googleapis.com"
 }
 
+resource "google_project_service" "iam" {
+  project = var.project_id
+  service = "iam.googleapis.com"
+}
+
 resource "google_service_account" "dbt_runner" {
   account_id   = "dbt-runner"
   display_name = "dbt runner"
   project      = var.project_id
+
+  depends_on = [google_project_service.iam]
 }
 
 resource "google_project_iam_member" "dbt_job_user" {
