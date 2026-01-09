@@ -1,0 +1,43 @@
+provider "google" {
+  project = var.project_id
+  region  = var.region
+}
+
+resource "google_project_service" "bigquery" {
+  project = var.project_id
+  service = "bigquery.googleapis.com"
+}
+
+resource "google_service_account" "dbt_runner" {
+  account_id   = "dbt-runner"
+  display_name = "dbt runner"
+  project      = var.project_id
+}
+
+resource "google_project_iam_member" "dbt_job_user" {
+  project = var.project_id
+  role    = "roles/bigquery.jobUser"
+  member  = "serviceAccount:${google_service_account.dbt_runner.email}"
+}
+
+resource "google_project_iam_member" "dbt_data_editor" {
+  project = var.project_id
+  role    = "roles/bigquery.dataEditor"
+  member  = "serviceAccount:${google_service_account.dbt_runner.email}"
+}
+
+resource "google_bigquery_dataset" "prod" {
+  dataset_id = var.prod_dataset_id
+  project    = var.project_id
+  location   = var.location
+
+  depends_on = [google_project_service.bigquery]
+}
+
+resource "google_bigquery_dataset" "dev" {
+  dataset_id = var.dev_dataset_id
+  project    = var.project_id
+  location   = var.location
+
+  depends_on = [google_project_service.bigquery]
+}

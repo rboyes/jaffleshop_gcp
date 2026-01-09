@@ -6,31 +6,32 @@ Introductory code to run DBT on Google Cloud
 
 - Google cloud account
 - Google cloud project created - call it jaffleshop-483809
+- Terraform
 - uv https://docs.astral.sh/uv/
 
-### Google Cloud Setup
+### Google Cloud Setup (Terraform)
 
 ```bash
-gcloud auth login
-gcloud services enable bigquery.googleapis.com --project jaffleshop-483809
+gcloud auth application-default login
+gcloud config set project jaffleshop-483809
 
-# Create the data sets for prod and dev
-bq --location=europe-west2 mk --dataset jaffleshop-483809:jaffleshop
-bq --location=europe-west2 mk --dataset jaffleshop-483809:jaffleshop_dev
+cd infra/terraform
+terraform init
+terraform apply -var project_id=jaffleshop-483809
+```
 
-# Create service account
-gcloud iam service-accounts create dbt-runner --project jaffleshop-483809 --display-name "dbt runner"
+Terraform provisions:
+- BigQuery API enablement
+- `jaffleshop` + `jaffleshop_dev` datasets in `europe-west2`
+- `dbt-runner` service account with `bigquery.jobUser` + `bigquery.dataEditor`
 
-# Grant BigQuery permissions
-gcloud projects add-iam-policy-binding jaffleshop-483809 --member "serviceAccount:dbt-runner@jaffleshop-483809.iam.gserviceaccount.com" --role "roles/bigquery.jobUser"
+Key creation is intentionally left out of Terraform to avoid storing secrets in state.
+Create a key only if you need one:
 
-gcloud projects add-iam-policy-binding jaffleshop-483809 --member "serviceAccount:dbt-runner@jaffleshop-483809.iam.gserviceaccount.com" --role "roles/bigquery.dataEditor"
-
-# Create a key file
-gcloud iam service-accounts keys create ./dbt-runner-key.json --project jaffleshop-483809 --iam-account "dbt-runner@jaffleshop-483809.iam.gserviceaccount.com"
-
-# Add key file to .gitignore
-echo "dbt-runner-key.json" >> .gitignore
+```bash
+gcloud iam service-accounts keys create ../dbt-runner-key.json \
+  --project jaffleshop-483809 \
+  --iam-account "dbt-runner@jaffleshop-483809.iam.gserviceaccount.com"
 ```
 
 ### Install uv and synchronise

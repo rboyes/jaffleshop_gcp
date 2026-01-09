@@ -208,5 +208,10 @@ __marimo__/
 
 
 dbt-runner-key.json
+.terraform/
+infra/terraform/terraform.tfstate
+infra/terraform/terraform.tfstate.backup
+*.tfstate
+*.tfstate.backup
 logs/
 target/
