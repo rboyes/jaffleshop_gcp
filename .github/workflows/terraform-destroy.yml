@@ -1,0 +1,40 @@
+name: terraform destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: "GCP project id"
+        required: true
+        default: "jaffleshop-483809"
+      confirm:
+        description: "Type DESTROY to confirm"
+        required: true
+
+jobs:
+  terraform-destroy:
+    if: ${{ inputs.confirm == 'DESTROY' }}
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_project_id: ${{ inputs.project_id }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Write GCP service account key
+        env:
+          GCP_TERRAFORM_KEY: ${{ secrets.GCP_TERRAFORM_KEY }}
+        run: |
+          printf '%s' "$GCP_TERRAFORM_KEY" > /tmp/gcp-key.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-key.json" >> "$GITHUB_ENV"
+
+      - name: Terraform init
+        working-directory: infra/terraform
+        run: terraform init
+
+      - name: Terraform destroy
+        working-directory: infra/terraform
+        run: terraform destroy -auto-approve

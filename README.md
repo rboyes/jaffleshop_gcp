@@ -4,12 +4,33 @@ Introductory code to run DBT on Google Cloud
 
 ### Pre-requisites
 
-- Google cloud account
 - Google cloud project created - call it jaffleshop-483809
+  ```bash
+  gcloud projects create jaffleshop-483809 --name="jaffleshop"
+  ```
 - Terraform
+- Google cloud admin service account created for project - call it terraform-runner
+  ```bash
+  # Create service account
+  gcloud iam service-accounts create terraform-runner \
+    --project jaffleshop-483809 \
+    --display-name "Terraform runner"
+
+  # Grant full project permissions (broad)
+  gcloud projects add-iam-policy-binding jaffleshop-483809 \
+    --member "serviceAccount:terraform-runner@jaffleshop-483809.iam.gserviceaccount.com" \
+    --role "roles/owner"
+
+  # Create a key file
+  gcloud iam service-accounts keys create ./terraform-runner-key.json \
+    --project jaffleshop-483809 \
+    --iam-account "terraform-runner@jaffleshop-483809.iam.gserviceaccount.com"
+  ```
 - uv https://docs.astral.sh/uv/
 
-### Google Cloud Setup (Terraform)
+
+
+### Terraform provisioning
 
 ```bash
 gcloud auth application-default login

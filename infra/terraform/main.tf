@@ -30,6 +30,8 @@ resource "google_bigquery_dataset" "prod" {
   dataset_id = var.prod_dataset_id
   project    = var.project_id
   location   = var.location
+  default_table_expiration_ms = 5184000000
+  default_partition_expiration_ms = 5184000000
 
   depends_on = [google_project_service.bigquery]
 }
@@ -38,6 +40,8 @@ resource "google_bigquery_dataset" "dev" {
   dataset_id = var.dev_dataset_id
   project    = var.project_id
   location   = var.location
+  default_table_expiration_ms = 5184000000
+  default_partition_expiration_ms = 5184000000
 
   depends_on = [google_project_service.bigquery]
 }
