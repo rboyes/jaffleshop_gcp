@@ -1,4 +1,4 @@
-name: dbt build
+name: Jaffle shop GCP/BigQuery Build
 
 on:
   schedule:
