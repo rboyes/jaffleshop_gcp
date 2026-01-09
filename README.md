@@ -31,7 +31,6 @@ gcloud iam service-accounts keys create ./dbt-runner-key.json --project jafflesh
 
 # Add key file to .gitignore
 echo "dbt-runner-key.json" >> .gitignore
-
 ```
 
 ### Install uv and synchronise
@@ -45,6 +44,7 @@ source .venv/bin/activate
 ### Run DBT
 
 ```bash
+# Ensure this runs in the repo root as some paths are relative
 dbt debug
 dbt build
 ```
