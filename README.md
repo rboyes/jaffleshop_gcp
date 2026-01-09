@@ -5,8 +5,8 @@ Introductory code to run DBT on Google Cloud
 ### Pre-requisites
 
 - Google cloud account
-- uv
 - Google cloud project created - call it jaffleshop-483809
+- uv https://docs.astral.sh/uv/
 
 ### Google Cloud Setup
 
