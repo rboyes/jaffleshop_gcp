@@ -1,0 +1,19 @@
+jaffle_shop:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: jaffleshop-483809
+      dataset: jaffleshop_dev
+      keyfile: dbt-runner-key.json
+      location: europe-west2
+      threads: 1
+    prod:
+      type: bigquery
+      method: service-account
+      project: jaffleshop-483809
+      dataset: jaffleshop
+      keyfile: dbt-runner-key.json
+      location: europe-west2
+      threads: 1
+  target: dev
