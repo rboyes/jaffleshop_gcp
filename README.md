@@ -69,7 +69,7 @@ Key creation is intentionally left out of Terraform to avoid storing secrets in 
 Create a key only if you need one:
 
 ```bash
-gcloud iam service-accounts keys create ../dbt-runner-key.json \
+gcloud iam service-accounts keys create ./dbt-runner-key.json \
   --project jaffleshop-483809 \
   --iam-account "dbt-runner@jaffleshop-483809.iam.gserviceaccount.com"
 ```
