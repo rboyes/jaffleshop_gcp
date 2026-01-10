@@ -9,7 +9,7 @@ Introductory code to run DBT on Google Cloud
   gcloud projects create jaffleshop-483809 --name="jaffleshop"
   ```
 - Terraform
-- Google cloud admin service account created for project - call it terraform-runner
+- Google cloud admin service account created for project deployment - call it terraform-runner
   ```bash
   # Create service account
   gcloud iam service-accounts create terraform-runner \
