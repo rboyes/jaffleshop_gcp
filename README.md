@@ -23,7 +23,7 @@ Introductory code to run DBT on Google Cloud
   ```
 - Workload identity federation for GitHub Actions
   ```bash
-  PROJECT_NUMBER=$(gcloud projects describe jaffleshop-483809 --format="value(projectNumber)")
+  PROJECT_NUMBER=$(gcloud projects describe jaffleshop-483809 --format="get(projectNumber)")
   OWNER="rboyes"
   REPO="jaffleshop_gcp"
 
