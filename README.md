@@ -88,5 +88,5 @@ source .venv/bin/activate
 # Ensure this runs in the repo root as some paths are relative
 dbt debug
 dbt build
-bq query 'SELECT order_id,customer_id,order_date,status FROM jaffleshop_dev.orders' --project_id=jaffleshop-483809
+bq  --project_id=jaffleshop-483809 query 'SELECT order_id,customer_id,order_date,status FROM jaffleshop_dev.orders'
 ```
