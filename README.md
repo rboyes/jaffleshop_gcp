@@ -74,6 +74,8 @@ gcloud iam service-accounts keys create ./dbt-runner-key.json \
   --iam-account "dbt-runner@jaffleshop-483809.iam.gserviceaccount.com"
 ```
 
+Note `profiles.yml` refers to the file `dbt-runner-key.json` for authentication.
+
 ### Install uv and synchronise
 
 ```bash
