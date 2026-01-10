@@ -3,6 +3,7 @@
 ## Project summary
 - dbt project configured for BigQuery (GCP project: `jaffleshop-483809`).
 - Profiles live in the repo root as `profiles.yml` and use a service account key file.
+- Terraform provisioning uses GitHub Actions workload identity federation.
 
 ## Local setup
 - Use `uv sync` to install dependencies and `source .venv/bin/activate`.
