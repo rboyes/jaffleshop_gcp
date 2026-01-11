@@ -56,11 +56,6 @@ Introductory code to run DBT on Google Cloud
     --role "roles/iam.workloadIdentityUser" \
     --member "principalSet://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/github-actions/attribute.repository/${OWNER}/${REPO}"
   ```
-- GitHub repo secrets for the workflow
-  ```text
-  GCP_WORKLOAD_IDENTITY_PROVIDER=projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
-  GCP_TERRAFORM_SERVICE_ACCOUNT=terraform-runner@jaffleshop-483809.iam.gserviceaccount.com
-  ```
 - uv https://docs.astral.sh/uv/
 
 
