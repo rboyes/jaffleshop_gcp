@@ -1,6 +1,7 @@
 variable "project_id" {
   type        = string
   description = "GCP project id."
+  default     = "jaffleshop-483809"
 }
 
 variable "region" {
