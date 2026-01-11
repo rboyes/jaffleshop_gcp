@@ -28,6 +28,11 @@ resource "google_project_service" "iam" {
   service = "iam.googleapis.com"
 }
 
+resource "google_project_service" "storage" {
+  project = var.project_id
+  service = "storage.googleapis.com"
+}
+
 resource "google_service_account" "dbt_runner" {
   account_id   = "dbt-runner"
   display_name = "dbt runner"
@@ -66,4 +71,19 @@ resource "google_bigquery_dataset" "dev" {
   default_partition_expiration_ms = 5184000000
 
   depends_on = [google_project_service.bigquery]
+}
+
+resource "google_storage_bucket" "csv" {
+  name                        = var.csv_bucket_name
+  project                     = var.project_id
+  location                    = var.region
+  uniform_bucket_level_access = true
+
+  depends_on = [google_project_service.storage]
+}
+
+resource "google_storage_bucket_iam_member" "dbt_runner_object_viewer" {
+  bucket = google_storage_bucket.csv.name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${google_service_account.dbt_runner.email}"
 }

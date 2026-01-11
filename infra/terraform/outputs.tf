@@ -10,3 +10,8 @@ output "bigquery_datasets" {
     dev  = google_bigquery_dataset.dev.dataset_id
   }
 }
+
+output "csv_bucket_name" {
+  description = "GCS bucket for CSV seed files."
+  value       = google_storage_bucket.csv.name
+}

@@ -26,3 +26,8 @@ variable "dev_dataset_id" {
   description = "BigQuery dev dataset id."
   default     = "jaffleshop_dev"
 }
+
+variable "csv_bucket_name" {
+  type        = string
+  description = "GCS bucket name for CSV seed files."
+}
