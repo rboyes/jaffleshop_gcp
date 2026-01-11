@@ -31,6 +31,14 @@ resource "google_service_account" "dbt_runner" {
   depends_on = [google_project_service.iam]
 }
 
+resource "google_service_account" "dataform_runner" {
+  account_id   = "dataform-runner"
+  display_name = "dataform runner"
+  project      = var.project_id
+
+  depends_on = [google_project_service.iam]
+}
+
 resource "google_project_iam_member" "dbt_job_user" {
   project = var.project_id
   role    = "roles/bigquery.jobUser"
@@ -41,6 +49,18 @@ resource "google_project_iam_member" "dbt_data_editor" {
   project = var.project_id
   role    = "roles/bigquery.dataEditor"
   member  = "serviceAccount:${google_service_account.dbt_runner.email}"
+}
+
+resource "google_project_iam_member" "dataform_job_user" {
+  project = var.project_id
+  role    = "roles/bigquery.jobUser"
+  member  = "serviceAccount:${google_service_account.dataform_runner.email}"
+}
+
+resource "google_project_iam_member" "dataform_data_editor" {
+  project = var.project_id
+  role    = "roles/bigquery.dataEditor"
+  member  = "serviceAccount:${google_service_account.dataform_runner.email}"
 }
 
 resource "google_bigquery_dataset" "prod" {
@@ -76,4 +96,10 @@ resource "google_storage_bucket_iam_member" "dbt_runner_object_viewer" {
   bucket = google_storage_bucket.project.name
   role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_service_account.dbt_runner.email}"
+}
+
+resource "google_storage_bucket_iam_member" "dataform_runner_object_viewer" {
+  bucket = google_storage_bucket.project.name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${google_service_account.dataform_runner.email}"
 }
