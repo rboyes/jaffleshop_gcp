@@ -16,16 +16,16 @@ variable "location" {
   default     = "europe-west2"
 }
 
-variable "prod_dataset_id" {
+variable "internal_dataset_id" {
   type        = string
-  description = "BigQuery prod dataset id."
-  default     = "jaffleshop"
+  description = "BigQuery internal dataset id."
+  default     = "internal"
 }
 
-variable "dev_dataset_id" {
+variable "presentation_dataset_id" {
   type        = string
-  description = "BigQuery dev dataset id."
-  default     = "jaffleshop_dev"
+  description = "BigQuery presentation dataset id."
+  default     = "presentation"
 }
 
 variable "project_bucket_name" {

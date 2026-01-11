@@ -1,0 +1,11 @@
+config {
+  type: "table",
+  schema: "internal"
+}
+
+select
+  cast(id as int64) as payment_id,
+  cast(order_id as int64) as order_id,
+  payment_method,
+  cast(amount as int64) as amount
+from ${ref("raw_payments")}

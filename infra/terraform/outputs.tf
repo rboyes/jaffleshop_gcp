@@ -6,8 +6,8 @@ output "dbt_service_account_email" {
 output "bigquery_datasets" {
   description = "Provisioned BigQuery datasets."
   value = {
-    prod = google_bigquery_dataset.prod.dataset_id
-    dev  = google_bigquery_dataset.dev.dataset_id
+    internal     = google_bigquery_dataset.internal.dataset_id
+    presentation = google_bigquery_dataset.presentation.dataset_id
   }
 }
 

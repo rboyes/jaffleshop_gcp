@@ -102,8 +102,8 @@ resource "google_secret_manager_secret_iam_member" "dataform_github_pat_accessor
   member    = "serviceAccount:service-${data.google_project.current.number}@gcp-sa-dataform.iam.gserviceaccount.com"
 }
 
-resource "google_bigquery_dataset" "prod" {
-  dataset_id = var.prod_dataset_id
+resource "google_bigquery_dataset" "internal" {
+  dataset_id = var.internal_dataset_id
   project    = var.project_id
   location   = var.location
   default_table_expiration_ms = 5184000000
@@ -112,8 +112,8 @@ resource "google_bigquery_dataset" "prod" {
   depends_on = [google_project_service.bigquery]
 }
 
-resource "google_bigquery_dataset" "dev" {
-  dataset_id = var.dev_dataset_id
+resource "google_bigquery_dataset" "presentation" {
+  dataset_id = var.presentation_dataset_id
   project    = var.project_id
   location   = var.location
   default_table_expiration_ms = 5184000000
