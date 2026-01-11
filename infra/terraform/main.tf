@@ -3,26 +3,6 @@ provider "google" {
   region  = var.region
 }
 
-import {
-  to = google_service_account.dbt_runner
-  id = "projects/${var.project_id}/serviceAccounts/dbt-runner@${var.project_id}.iam.gserviceaccount.com"
-}
-
-import {
-  to = google_bigquery_dataset.prod
-  id = "projects/${var.project_id}/datasets/${var.prod_dataset_id}"
-}
-
-import {
-  to = google_bigquery_dataset.dev
-  id = "projects/${var.project_id}/datasets/${var.dev_dataset_id}"
-}
-
-import {
-  to = google_storage_bucket.csv
-  id = "jaffleshop-483809"
-}
-
 resource "google_project_service" "bigquery" {
   project = var.project_id
   service = "bigquery.googleapis.com"
