@@ -20,6 +20,15 @@ Introductory code to run DBT on Google Cloud
   gcloud projects add-iam-policy-binding jaffleshop-483809 \
     --member "serviceAccount:terraform-runner@jaffleshop-483809.iam.gserviceaccount.com" \
     --role "roles/owner"
+
+  # Storage bucket to maintain state
+  gcloud storage buckets create gs://jaffleshop-483809-tfstate \
+    --project=jaffleshop-483809 \
+    --location=europe-west2 \
+    --uniform-bucket-level-access
+
+  gcloud storage buckets update gs://jaffleshop-483809-tfstate --versioning
+
   ```
 - Workload identity federation for GitHub Actions
   ```bash
