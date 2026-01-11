@@ -33,6 +33,11 @@ resource "google_project_service" "storage" {
   service = "storage.googleapis.com"
 }
 
+resource "google_project_service" "dataform" {
+  project = var.project_id
+  service = "dataform.googleapis.com"
+}
+
 resource "google_service_account" "dbt_runner" {
   account_id   = "dbt-runner"
   display_name = "dbt runner"
