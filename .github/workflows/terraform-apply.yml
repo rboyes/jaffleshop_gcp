@@ -16,7 +16,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: projects/902774502788/locations/global/workloadIdentityPools/github-actions/providers/
+          workload_identity_provider: projects/902774502788/locations/global/workloadIdentityPools/github-actions/providers/github-actions
           service_account: terraform-runner@jaffleshop-483809.iam.gserviceaccount.com
           project_id: jaffleshop-483809
 
