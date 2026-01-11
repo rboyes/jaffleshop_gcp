@@ -39,6 +39,10 @@ resource "google_service_account" "dataform_runner" {
   depends_on = [google_project_service.iam]
 }
 
+data "google_project" "current" {
+  project_id = var.project_id
+}
+
 resource "google_project_iam_member" "dbt_job_user" {
   project = var.project_id
   role    = "roles/bigquery.jobUser"
@@ -61,6 +65,18 @@ resource "google_project_iam_member" "dataform_data_editor" {
   project = var.project_id
   role    = "roles/bigquery.dataEditor"
   member  = "serviceAccount:${google_service_account.dataform_runner.email}"
+}
+
+resource "google_service_account_iam_member" "dataform_service_agent_token_creator" {
+  service_account_id = google_service_account.dataform_runner.name
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:service-${data.google_project.current.number}@gcp-sa-dataform.iam.gserviceaccount.com"
+}
+
+resource "google_service_account_iam_member" "dataform_service_agent_user" {
+  service_account_id = google_service_account.dataform_runner.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:service-${data.google_project.current.number}@gcp-sa-dataform.iam.gserviceaccount.com"
 }
 
 resource "google_bigquery_dataset" "prod" {
