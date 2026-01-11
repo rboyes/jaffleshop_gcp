@@ -18,6 +18,11 @@ import {
   id = "projects/${var.project_id}/datasets/${var.dev_dataset_id}"
 }
 
+import {
+  to = google_storage_bucket.csv
+  id = "jaffleshop-483809"
+}
+
 resource "google_project_service" "bigquery" {
   project = var.project_id
   service = "bigquery.googleapis.com"
