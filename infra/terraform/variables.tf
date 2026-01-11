@@ -27,8 +27,8 @@ variable "dev_dataset_id" {
   default     = "jaffleshop_dev"
 }
 
-variable "csv_bucket_name" {
+variable "project_bucket_name" {
   type        = string
-  description = "GCS bucket name for CSV seed files."
+  description = "GCS bucket name for project."
   default     = "jaffleshop-483809"
 }

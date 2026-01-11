@@ -11,7 +11,7 @@ output "bigquery_datasets" {
   }
 }
 
-output "csv_bucket_name" {
-  description = "GCS bucket for CSV seed files."
-  value       = google_storage_bucket.csv.name
+output "project_bucket_name" {
+  description = "GCS bucket for project."
+  value       = google_storage_bucket.project.name
 }

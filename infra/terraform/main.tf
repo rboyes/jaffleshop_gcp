@@ -83,8 +83,8 @@ resource "google_bigquery_dataset" "dev" {
   depends_on = [google_project_service.bigquery]
 }
 
-resource "google_storage_bucket" "csv" {
-  name                        = var.csv_bucket_name
+resource "google_storage_bucket" "project" {
+  name                        = var.project_bucket_name
   project                     = var.project_id
   location                    = var.region
   uniform_bucket_level_access = true
@@ -93,7 +93,7 @@ resource "google_storage_bucket" "csv" {
 }
 
 resource "google_storage_bucket_iam_member" "dbt_runner_object_viewer" {
-  bucket = google_storage_bucket.csv.name
+  bucket = google_storage_bucket.project.name
   role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_service_account.dbt_runner.email}"
 }
