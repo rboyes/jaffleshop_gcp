@@ -1,4 +1,4 @@
 defaultProject: jaffleshop-483809
-defaultDataset: jaffleshop
-defaultAssertionDataset: dataform_assertions
+defaultDataset: internal
+defaultAssertionDataset: internal
 dataformCoreVersion: 3.0.37
