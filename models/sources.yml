@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: raw
+    database: "{{ target.project }}"
+    schema: "{{ target.dataset }}"
+    tables:
+      - name: raw_customers
+        external:
+          location: "gs://jaffleshop-483809/csv/raw_customers.csv"
+          options:
+            format: csv
+            skip_leading_rows: 1
+      - name: raw_orders
+        external:
+          location: "gs://jaffleshop-483809/csv/raw_orders.csv"
+          options:
+            format: csv
+            skip_leading_rows: 1
+      - name: raw_payments
+        external:
+          location: "gs://jaffleshop-483809/csv/raw_payments.csv"
+          options:
+            format: csv
+            skip_leading_rows: 1

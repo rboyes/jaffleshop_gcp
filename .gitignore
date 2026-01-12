@@ -216,3 +216,4 @@ infra/terraform/terraform.tfstate.backup
 logs/
 target/
 node_modules/
+dbt_packages/

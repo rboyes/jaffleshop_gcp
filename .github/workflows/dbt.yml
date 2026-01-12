@@ -34,6 +34,11 @@ jobs:
           DBT_PROFILES_DIR: ${{ github.workspace }}
         run: uv run dbt deps
 
+      - name: dbt stage external sources
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}
+        run: uv run dbt run-operation stage_external_sources --target prod
+
       - name: dbt build
         env:
           DBT_PROFILES_DIR: ${{ github.workspace }}

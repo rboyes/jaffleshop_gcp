@@ -19,7 +19,7 @@ What this repo _is not_:
 - A demonstration of using dbt for a high-complex project, or a demo of advanced features (e.g. macros, packages, hooks, operations) — we're just trying to keep things simple here!
 
 ### What's in this repo?
-This repo expects raw CSVs in GCS and defines raw external tables as dbt models.
+This repo expects raw CSVs in GCS and defines them as external sources via `dbt-external-tables`.
 
 The raw data consists of customers, orders, and payments, with the following entity-relationship diagram:
 
@@ -44,24 +44,30 @@ $ cd jaffle_shop
 $ dbt debug
 ```
 
-6. Run the models:
+6. Install packages and stage external sources:
+```bash
+$ dbt deps
+$ dbt run-operation stage_external_sources
+```
+
+7. Run the models:
 ```bash
 $ dbt run
 ```
 
 > **NOTE:** If this steps fails, it might mean that you need to make small changes to the SQL in the models folder to adjust for the flavor of SQL of your target database. Definitely consider this if you are using a community-contributed adapter.
 
-7. Test the output of the models:
+8. Test the output of the models:
 ```bash
 $ dbt test
 ```
 
-8. Generate documentation for the project:
+9. Generate documentation for the project:
 ```bash
 $ dbt docs generate
 ```
 
-9. View the documentation for the project:
+10. View the documentation for the project:
 ```bash
 $ dbt docs serve
 ```

@@ -100,8 +100,9 @@ gcloud iam service-accounts keys create ./dbt-runner-key.json \
 Run DBT
 ```bash
 # Ensure this runs in the repo root as some paths are relative
+dbt deps
+dbt run-operation stage_external_sources
 dbt debug
 dbt build
 bq  --project_id=jaffleshop-483809 query 'SELECT order_id,customer_id,order_date,status FROM jaffleshop_dev.orders'
 ```
-
