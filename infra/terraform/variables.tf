@@ -16,18 +16,6 @@ variable "location" {
   default     = "europe-west2"
 }
 
-variable "internal_dataset_id" {
-  type        = string
-  description = "BigQuery internal dataset id."
-  default     = "internal"
-}
-
-variable "presentation_dataset_id" {
-  type        = string
-  description = "BigQuery presentation dataset id."
-  default     = "presentation"
-}
-
 variable "project_bucket_name" {
   type        = string
   description = "GCS bucket name for project."

@@ -102,26 +102,6 @@ resource "google_secret_manager_secret_iam_member" "dataform_github_pat_accessor
   member    = "serviceAccount:service-${data.google_project.current.number}@gcp-sa-dataform.iam.gserviceaccount.com"
 }
 
-resource "google_bigquery_dataset" "internal" {
-  dataset_id = var.internal_dataset_id
-  project    = var.project_id
-  location   = var.location
-  default_table_expiration_ms = 5184000000
-  default_partition_expiration_ms = 5184000000
-
-  depends_on = [google_project_service.bigquery]
-}
-
-resource "google_bigquery_dataset" "presentation" {
-  dataset_id = var.presentation_dataset_id
-  project    = var.project_id
-  location   = var.location
-  default_table_expiration_ms = 5184000000
-  default_partition_expiration_ms = 5184000000
-
-  depends_on = [google_project_service.bigquery]
-}
-
 resource "google_storage_bucket" "project" {
   name                        = var.project_bucket_name
   project                     = var.project_id
