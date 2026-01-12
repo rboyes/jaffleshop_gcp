@@ -6,3 +6,8 @@ dependencies = [
     "dbt-bigquery>=1.11.0",
     "dbt-core>=1.11.2",
 ]
+
+[dependency-groups]
+dev = [
+    "shandy-sqlfmt[jinjafmt]>=0.27.0",
+]

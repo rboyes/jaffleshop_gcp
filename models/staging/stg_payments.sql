@@ -1,21 +1,19 @@
-with source as (
-    
-    select * from {{ source('raw', 'raw_payments') }}
+with
+    source as (select * from {{ source("raw", "raw_payments") }}),
 
-),
+    renamed as (
 
-renamed as (
+        select
+            id as payment_id,
+            order_id,
+            payment_method,
 
-    select
-        id as payment_id,
-        order_id,
-        payment_method,
+            -- `amount` is currently stored in cents, so we convert it to dollars
+            amount / 100 as amount
 
-        -- `amount` is currently stored in cents, so we convert it to dollars
-        amount / 100 as amount
+        from source
 
-    from source
+    )
 
-)
-
-select * from renamed
+select *
+from renamed
