@@ -62,15 +62,34 @@ Introductory code to run DBT on Google Cloud
 
 ### Terraform provisioning
 
-Done by github action in .github/workflows/terraform-apply
+Deploy the terraform:
+```bash
+cd infra/terraform
+terraform init
+terraform apply
+```
+Done by github action in .github/workflows/terraform-apply.yml
 
 Terraform provisions:
 - BigQuery API enablement
 - `jaffleshop` + `jaffleshop_dev` datasets in `europe-west2`
 - `dbt-runner` service account with `bigquery.jobUser` + `bigquery.dataEditor`
 
-Key creation is intentionally left out of Terraform to avoid storing secrets in state.
-Create a key only if you need one:
+### Set up DBT and excecute
+
+Install uv and synchronise
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv sync
+source .venv/bin/activate
+```
+
+Copy the raw csv files to the storage bucket
+```bash
+gcloud storage cp --recursive csv gs://jaffleshop-483809/
+```
+
+Create a key for dbt to execute. Note `profiles.yml` refers to the file `dbt-runner-key.json` for authentication.
 
 ```bash
 gcloud iam service-accounts keys create ./dbt-runner-key.json \
@@ -78,21 +97,11 @@ gcloud iam service-accounts keys create ./dbt-runner-key.json \
   --iam-account "dbt-runner@jaffleshop-483809.iam.gserviceaccount.com"
 ```
 
-Note `profiles.yml` refers to the file `dbt-runner-key.json` for authentication.
-
-### Install uv and synchronise
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-uv sync
-source .venv/bin/activate
-```
-
-### Run DBT
-
+Run DBT
 ```bash
 # Ensure this runs in the repo root as some paths are relative
 dbt debug
 dbt build
 bq  --project_id=jaffleshop-483809 query 'SELECT order_id,customer_id,order_date,status FROM jaffleshop_dev.orders'
 ```
+
