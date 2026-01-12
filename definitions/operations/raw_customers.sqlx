@@ -1,0 +1,16 @@
+config {
+  type: "operations",
+  hasOutput: true,
+  name: "raw_customers"
+}
+
+CREATE OR REPLACE EXTERNAL TABLE `${dataform.projectConfig.defaultDatabase}.${dataform.projectConfig.defaultSchema}.raw_customers` (
+  id INT64,
+  first_name STRING,
+  last_name STRING
+)
+OPTIONS (
+  format = "CSV",
+  uris = ["gs://jaffleshop-483809/csv/raw_customers.csv"],
+  skip_leading_rows = 1
+);
